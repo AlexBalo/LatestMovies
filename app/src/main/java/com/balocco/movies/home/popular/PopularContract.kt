@@ -20,9 +20,9 @@ interface PopularContract {
 
         fun onLoadMore()
 
-        fun onSortByTimeDescending()
+        fun onSortReleaseDateDescendingClicked()
 
-        fun onSortByTimeAscending()
+        fun onSortReleaseDateAscendingClicked()
 
         fun onFilterCleared()
 
@@ -42,7 +42,7 @@ interface PopularContract {
 
         fun scrollListToTop()
 
-        fun showFilterEnabledMessage(@StringRes messageRes: Int)
+        fun showFilterMessage(@StringRes messageRes: Int)
 
         fun hideFilterMessage()
 

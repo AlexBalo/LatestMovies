@@ -121,11 +121,11 @@ class PopularFragment : BaseFragment(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
             when (item.itemId) {
                 R.id.time_desc -> {
-                    presenter.onSortByTimeDescending()
+                    presenter.onSortReleaseDateDescendingClicked()
                     true
                 }
                 R.id.time_asc -> {
-                    presenter.onSortByTimeAscending()
+                    presenter.onSortReleaseDateAscendingClicked()
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
@@ -166,7 +166,7 @@ class PopularFragment : BaseFragment(),
         layoutManager.scrollToPositionWithOffset(0, 0)
     }
 
-    override fun showFilterEnabledMessage(messageRes: Int) {
+    override fun showFilterMessage(messageRes: Int) {
         val isSnackBarShown = snackBar != null && snackBar!!.isShown
         if (isSnackBarShown) {
             snackBar!!.setText(messageRes)

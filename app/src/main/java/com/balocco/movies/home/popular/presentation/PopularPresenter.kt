@@ -90,14 +90,14 @@ class PopularPresenter @Inject constructor(
         fetchMovies()
     }
 
-    override fun onSortByTimeDescending() {
+    override fun onSortReleaseDateDescendingClicked() {
         if (filter == Filter.TIME_DESC) {
             return
         }
         applyReleaseDateDescendingFilter()
     }
 
-    override fun onSortByTimeAscending() {
+    override fun onSortReleaseDateAscendingClicked() {
         if (filter == Filter.TIME_ASC) {
             return
         }
@@ -159,7 +159,7 @@ class PopularPresenter @Inject constructor(
         view.disableLoadingCallbacks()
         Collections.sort(movies, comparator)
         view.showMovies(movies)
-        view.showFilterEnabledMessage(messageRes)
+        view.showFilterMessage(messageRes)
         view.scrollListToTop()
     }
 
