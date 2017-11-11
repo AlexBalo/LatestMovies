@@ -1,5 +1,6 @@
 package com.balocco.movies.home.popular
 
+import android.os.Bundle
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.mvp.BasePresenter
 import com.balocco.movies.mvp.BaseView
@@ -8,9 +9,13 @@ interface PopularContract {
 
     interface Presenter : BasePresenter<View> {
 
-        fun start()
+        fun start(savedInstanceState: Bundle?)
+
+        fun onSaveInstanceState(outBundle: Bundle)
 
         fun onMovieSelected(movie: Movie)
+
+        fun onLoadMore()
 
     }
 

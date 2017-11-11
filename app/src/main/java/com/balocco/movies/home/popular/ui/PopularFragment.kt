@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.Toast
 import butterknife.BindView
 import com.balocco.movies.R
 import com.balocco.movies.common.UrlProvider
@@ -49,8 +48,7 @@ class PopularFragment : BaseFragment(),
 
     private val endlessScrollListener = object : OnEndlessListListener {
         override fun onLoadMore() {
-            //presenter.onTimeToLoadMore()
-            Toast.makeText(this@PopularFragment.context, "Load more", Toast.LENGTH_SHORT).show()
+            presenter.onLoadMore()
         }
     }
 
@@ -98,7 +96,12 @@ class PopularFragment : BaseFragment(),
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.start()
+        presenter.start(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        presenter.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {

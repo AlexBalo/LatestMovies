@@ -9,7 +9,7 @@ class FetchPopularMoviesUseCase @Inject constructor(
         private val remoteDataSource: RemoteDataSource
 ) {
 
-    fun execute(): Single<PopularResponse> =
-            remoteDataSource.getPopularMovies(1)
+    fun execute(page: Int): Single<PopularResponse> =
+            remoteDataSource.getPopularMovies(page)
 
 }
