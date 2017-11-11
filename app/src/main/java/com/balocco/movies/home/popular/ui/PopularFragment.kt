@@ -36,7 +36,7 @@ class PopularFragment : BaseFragment(),
     @BindView(R.id.rv_moview) lateinit var rvMoview: RecyclerView
 
     private lateinit var adapter: PopularAdapter
-    private lateinit var container: FragmentContainer
+    private var container: FragmentContainer? = null
 
     private val movieClickListener = object : OnMovieClickListener {
         override fun onMovieClicked(movie: Movie) {
@@ -63,7 +63,7 @@ class PopularFragment : BaseFragment(),
         val view = inflater.inflate(R.layout.fragment_popular, container, false)
         bindView(this, view)
 
-        this.container.enableNavigation(false)
+        this.container?.enableNavigation(false)
 
         rvMoview.isClickable = true
         val layoutManager = LinearLayoutManager(context)
@@ -100,11 +100,12 @@ class PopularFragment : BaseFragment(),
 
     override fun onDestroy() {
         presenter.destroy()
+        container = null
         super.onDestroy()
     }
 
     override fun setTitle(titleRes: Int) {
-        container.setTitle(R.string.title_popular_feed)
+        container?.setTitle(R.string.title_popular_feed)
     }
 
     override fun showLoading() {
@@ -120,7 +121,7 @@ class PopularFragment : BaseFragment(),
     }
 
     override fun navigateToDetail(movie: Movie) {
-        container.onMovieSelected(movie)
+        container?.onMovieSelected(movie)
     }
 
     interface FragmentContainer {

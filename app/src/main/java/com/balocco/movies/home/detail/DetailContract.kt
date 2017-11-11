@@ -24,6 +24,8 @@ interface DetailContract {
 
         fun showTitle(title: String)
 
+        fun showGenres(genres: String)
+
         fun showDescription(description: String)
 
         fun showReleaseDate(releaseDate: String)

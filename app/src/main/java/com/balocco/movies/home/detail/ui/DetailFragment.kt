@@ -42,7 +42,7 @@ class DetailFragment : BaseFragment(),
     @BindView(R.id.tv_original_language) lateinit var tvLanguage: TextView
     @BindView(R.id.tv_rating) lateinit var tvRating: TextView
 
-    private lateinit var container: FragmentContainer
+    private var container: FragmentContainer? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -58,7 +58,7 @@ class DetailFragment : BaseFragment(),
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         bindView(this, view)
 
-        this.container.enableNavigation(true)
+        this.container?.enableNavigation(true)
 
         val movie: Movie? = arguments?.getParcelable(KEY_MOVIE)
         presenter.setView(this)
@@ -69,15 +69,16 @@ class DetailFragment : BaseFragment(),
 
     override fun onDestroy() {
         presenter.destroy()
+        container = null
         super.onDestroy()
     }
 
     override fun setTitle(title: String) {
-        container.setTitle(title)
+        container?.setTitle(title)
     }
 
     override fun navigateBack() {
-        container.back()
+        container?.back()
     }
 
     override fun setBackdropSizes(width: Int, height: Int) {
@@ -92,6 +93,10 @@ class DetailFragment : BaseFragment(),
 
     override fun showTitle(title: String) {
         tvTitle.text = title
+    }
+
+    override fun showGenres(genres: String) {
+        tvGenres.text = genres
     }
 
     override fun showDescription(description: String) {
