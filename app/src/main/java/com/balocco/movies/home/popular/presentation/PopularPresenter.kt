@@ -10,7 +10,9 @@ import com.balocco.movies.home.popular.data.MoviePopularityDescendingComparator
 import com.balocco.movies.home.popular.data.MovieReleaseDateAscendingComparator
 import com.balocco.movies.home.popular.data.MovieReleaseDateDescendingComparator
 import com.balocco.movies.home.popular.usecase.FetchPopularMoviesUseCase
+import com.balocco.movies.home.popular.usecase.SortPopularMoviesUseCase
 import com.balocco.movies.mvp.ReactivePresenter
+import io.reactivex.internal.functions.Functions
 import java.util.*
 import javax.inject.Inject
 
@@ -22,7 +24,8 @@ private const val KEY_FILTER = "KEY_FILTER"
 
 class PopularPresenter @Inject constructor(
         private val schedulerProvider: SchedulerProvider,
-        private val fetchPopularMoviesUseCase: FetchPopularMoviesUseCase
+        private val fetchPopularMoviesUseCase: FetchPopularMoviesUseCase,
+        private val sortPopularMoviesUseCase: SortPopularMoviesUseCase
 ) : ReactivePresenter(), PopularContract.Presenter {
 
     private enum class Filter {
@@ -52,21 +55,18 @@ class PopularPresenter @Inject constructor(
             filter = Filter.values()[savedInstanceState.getInt(KEY_FILTER)]
         }
 
-        when (filter) {
-            Filter.TIME_DESC -> {
-                applyReleaseDateDescendingFilter()
-            }
-            Filter.TIME_ASC -> {
-                applyReleaseDateAscendingFilter()
-            }
-            else -> {
-                if (movies.isEmpty()) {
-                    fetchMovies()
-                } else {
-                    view.hideLoading()
-                    view.showMovies(movies)
-                }
-            }
+        if (movies.isEmpty()) {
+            filter = Filter.POPULARITY
+            fetchMovies()
+            return
+        }
+
+        view.hideLoading()
+        view.showMovies(movies)
+        if (filter == Filter.TIME_DESC) {
+            view.showFilterMessage(R.string.popular_filter_message_desc)
+        } else if (filter == Filter.TIME_ASC) {
+            view.showFilterMessage(R.string.popular_filter_message_asc)
         }
     }
 
@@ -108,8 +108,7 @@ class PopularPresenter @Inject constructor(
         filter = Filter.POPULARITY
         view.hideLoading()
         view.enabledLoadingCallbacks()
-        Collections.sort(movies, MoviePopularityDescendingComparator())
-        view.showMovies(movies)
+        sortList(MoviePopularityDescendingComparator(), INVALID)
     }
 
     private fun fetchMovies() {
@@ -154,13 +153,33 @@ class PopularPresenter @Inject constructor(
     private fun applySortingFilter(newFilter: Filter,
                                    comparator: Comparator<Movie>,
                                    @StringRes messageRes: Int) {
+
         filter = newFilter
-        view.hideLoading()
-        view.disableLoadingCallbacks()
-        Collections.sort(movies, comparator)
-        view.showMovies(movies)
-        view.showFilterMessage(messageRes)
-        view.scrollListToTop()
+        with(view) {
+            hideLoading()
+            disableLoadingCallbacks()
+        }
+        sortList(comparator, messageRes)
+    }
+
+    private fun sortList(comparator: Comparator<Movie>,
+                         @StringRes messageRes: Int = INVALID) {
+        addDisposable(
+                sortPopularMoviesUseCase.execute(movies, comparator)
+                        .subscribeOn(schedulerProvider.io())
+                        .observeOn(schedulerProvider.ui())
+                        .subscribe({
+                            with(view) {
+                                showMovies(movies)
+                                scrollListToTop()
+                                if (messageRes != INVALID) {
+                                    showFilterMessage(messageRes)
+                                }
+                            }
+                        }, {
+                            Functions.EMPTY_ACTION
+                        })
+        )
     }
 
 }

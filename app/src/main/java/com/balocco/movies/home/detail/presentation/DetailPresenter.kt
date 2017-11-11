@@ -42,14 +42,15 @@ class DetailPresenter @Inject constructor(
         fetchGenres(movie)
 
         val backdropUrl = urlProvider.provideUrlForBackdrop(movie.backdropPath)
-        view.showBackdrop(backdropUrl)
-        view.showTitle(movie.title)
-        view.showDescription(movie.overview)
-
         val readableDate = dateToHumanReadableUseCase.execute(movie.releaseDate)
-        view.showReleaseDate(readableDate)
-        view.showOriginalLanguage(movie.originalLanguage)
-        view.showRating(movie.voteAverage.toString())
+        with(view) {
+            showBackdrop(backdropUrl)
+            showTitle(movie.title)
+            showDescription(movie.overview)
+            showReleaseDate(readableDate)
+            showOriginalLanguage(movie.originalLanguage)
+            showRating(movie.voteAverage.toString())
+        }
     }
 
     private fun fetchGenres(movie: Movie) {

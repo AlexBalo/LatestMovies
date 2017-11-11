@@ -75,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/one_and_half_grid_unit"
             android:layout_marginRight="@dimen/one_and_half_grid_unit"
+            android:layout_marginBottom="@dimen/two_grid_unit"
             android:textSize="@dimen/one_and_three_quarter_text_unit" />
 
     </LinearLayout>
