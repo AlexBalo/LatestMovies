@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import butterknife.BindView
 import com.balocco.movies.R
+import com.balocco.movies.common.UrlProvider
+import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.common.ui.BaseFragment
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.popular.PopularContract
@@ -26,6 +28,8 @@ class PopularFragment : BaseFragment(),
     }
 
     @Inject lateinit var presenter: PopularPresenter
+    @Inject lateinit var urlProvider: UrlProvider
+    @Inject lateinit var imageLoader: ImageLoader
     @Inject lateinit var dateToHumanReadableUseCase: DateToHumanReadableUseCase
 
     @BindView(R.id.pb_loader) lateinit var progressBar: ProgressBar
@@ -57,6 +61,8 @@ class PopularFragment : BaseFragment(),
         recyclerView.layoutManager = layoutManager
         context?.let {
             adapter = PopularAdapter(it,
+                    imageLoader,
+                    urlProvider,
                     dateToHumanReadableUseCase)
             recyclerView.adapter = adapter
         }

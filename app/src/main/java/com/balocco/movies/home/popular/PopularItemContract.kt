@@ -22,6 +22,8 @@ interface PopularItemContract {
 
         fun showRating(rating: String)
 
+        fun showPoster(posterUrl: String)
+
     }
 
 }

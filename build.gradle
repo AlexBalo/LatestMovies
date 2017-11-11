@@ -54,6 +54,9 @@ allprojects {
         rxAndroidVersion = "2.0.1"
         rxLintVersion = "1.5"
 
+        // Picasso
+        picassoVersion = "2.5.2"
+
         // Test
         junitVersion = "4.12"
         assertjVersion = "3.8.0"

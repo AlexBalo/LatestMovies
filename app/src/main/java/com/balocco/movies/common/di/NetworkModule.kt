@@ -1,9 +1,11 @@
 package com.balocco.movies.common.di
 
+import android.content.Context
 import com.balocco.movies.common.network.MoviesInterceptor
 import com.balocco.movies.data.remote.RemoteDataSource
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.picasso.Picasso
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -20,6 +22,9 @@ private const val DATE_FORMAT = "yyyy-MM-dd"
 /* Module that contains network dependencies. */
 @Module
 class NetworkModule {
+
+    @Provides @ApplicationScope
+    fun providePicasso(context: Context): Picasso = Picasso.with(context)
 
     @Provides @ApplicationScope
     fun provideGson(): Gson = GsonBuilder().setDateFormat(DATE_FORMAT).create()

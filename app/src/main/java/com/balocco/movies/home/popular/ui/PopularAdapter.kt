@@ -5,12 +5,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.balocco.movies.R
+import com.balocco.movies.common.UrlProvider
+import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
 import java.util.*
 
 class PopularAdapter(
         context: Context,
+        private val imageLoader: ImageLoader,
+        private val urlProvider: UrlProvider,
         private val dateToHumanReadableUseCase: DateToHumanReadableUseCase
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -35,7 +39,10 @@ class PopularAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = inflater.inflate(R.layout.listitem_movie, parent, false)
-        return PopularItemViewHolder(view, dateToHumanReadableUseCase)
+        return PopularItemViewHolder(view,
+                imageLoader,
+                urlProvider,
+                dateToHumanReadableUseCase)
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
