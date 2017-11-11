@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/quarter_grid_unit"
+        android:layout_marginRight="@dimen/quarter_grid_unit"
+        android:ellipsize="end"
+        android:textSize="@dimen/two_text_unit"
+        android:textColor="@android:color/black" />
+
+</LinearLayout>
