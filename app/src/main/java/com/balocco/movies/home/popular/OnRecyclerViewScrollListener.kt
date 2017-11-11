@@ -37,7 +37,7 @@ class OnRecyclerViewScrollListener(
             return (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
         }
 
-    fun setEndlessScrollListener(endlessScrollListener: OnEndlessListListener) {
+    fun setEndlessScrollListener(endlessScrollListener: OnEndlessListListener?) {
         this.endlessScrollListener = endlessScrollListener
         this.visibleThreshold = DEFAULT_THRESHOLD
     }

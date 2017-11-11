@@ -3,6 +3,7 @@ package com.balocco.movies.home.popular.ui
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -38,7 +39,10 @@ class PopularFragment : BaseFragment(),
     @BindView(R.id.rv_moview) lateinit var rvMoview: RecyclerView
 
     private lateinit var adapter: PopularAdapter
+    private lateinit var scrollListener: OnRecyclerViewScrollListener
+    private lateinit var layoutManager: LinearLayoutManager
     private var container: FragmentContainer? = null
+    private var snackBar: Snackbar? = null
 
     private val movieClickListener = object : OnMovieClickListener {
         override fun onMovieClicked(movie: Movie) {
@@ -49,6 +53,12 @@ class PopularFragment : BaseFragment(),
     private val endlessScrollListener = object : OnEndlessListListener {
         override fun onLoadMore() {
             presenter.onLoadMore()
+        }
+    }
+
+    private val callback: Snackbar.Callback = object : Snackbar.Callback() {
+        override fun onDismissed(snackbar: Snackbar?, event: Int) {
+            presenter.onFilterCleared()
         }
     }
 
@@ -74,9 +84,8 @@ class PopularFragment : BaseFragment(),
         this.container?.enableNavigation(false)
 
         rvMoview.isClickable = true
-        val layoutManager = LinearLayoutManager(context)
-        val scrollListener = OnRecyclerViewScrollListener(layoutManager)
-        scrollListener.setEndlessScrollListener(endlessScrollListener)
+        layoutManager = LinearLayoutManager(context)
+        scrollListener = OnRecyclerViewScrollListener(layoutManager)
         rvMoview.layoutManager = layoutManager
         rvMoview.addOnScrollListener(scrollListener)
 
@@ -106,14 +115,26 @@ class PopularFragment : BaseFragment(),
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_main, menu)
+        inflater?.inflate(R.menu.menu_popular, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
             when (item.itemId) {
-                R.id.action_settings -> true
+                R.id.time_desc -> {
+                    presenter.onSortByTimeDescending()
+                    true
+                }
+                R.id.time_asc -> {
+                    presenter.onSortByTimeAscending()
+                    true
+                }
                 else -> super.onOptionsItemSelected(item)
             }
+
+    override fun onDestroyView() {
+        presenter.stop()
+        super.onDestroyView()
+    }
 
     override fun onDestroy() {
         presenter.destroy()
@@ -139,6 +160,38 @@ class PopularFragment : BaseFragment(),
 
     override fun navigateToDetail(movie: Movie) {
         container?.onMovieSelected(movie)
+    }
+
+    override fun scrollListToTop() {
+        layoutManager.scrollToPositionWithOffset(0, 0)
+    }
+
+    override fun showFilterEnabledMessage(messageRes: Int) {
+        val isSnackBarShown = snackBar != null && snackBar!!.isShown
+        if (isSnackBarShown) {
+            snackBar!!.setText(messageRes)
+            return
+        }
+
+        snackBar = Snackbar.make(rvMoview, messageRes, Snackbar.LENGTH_INDEFINITE)
+        snackBar!!.setAction(R.string.popular_filter_message_button, {
+            presenter.onFilterCleared()
+        })
+        snackBar!!.addCallback(callback)
+        snackBar!!.show()
+    }
+
+    override fun hideFilterMessage() {
+        snackBar?.removeCallback(callback)
+        snackBar?.dismiss()
+    }
+
+    override fun enabledLoadingCallbacks() {
+        scrollListener.setEndlessScrollListener(endlessScrollListener)
+    }
+
+    override fun disableLoadingCallbacks() {
+        scrollListener.setEndlessScrollListener(null)
     }
 
     interface FragmentContainer {

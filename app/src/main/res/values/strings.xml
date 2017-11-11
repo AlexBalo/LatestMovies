@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Movies</string>
-    <string name="action_settings">Settings</string>
 
     <string name="title_popular_feed">Popular feed</string>
 
@@ -8,4 +7,11 @@
     <string name="popular_item_release">Released on: %s</string>
     <string name="popular_item_language">Language: %s</string>
     <string name="popular_item_rating">Avg rating: %s</string>
+
+    <string name="popular_action_time_desc">Sort by release date desc</string>
+    <string name="popular_action_time_asc">Sort by release date asc</string>
+
+    <string name="popular_filter_message_desc">Newest movies first</string>
+    <string name="popular_filter_message_asc">Oldest movies first</string>
+    <string name="popular_filter_message_button">REMOVE</string>
 </resources>

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/time_desc"
+        android:orderInCategory="100"
+        android:title="@string/popular_action_time_desc"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/time_asc"
+        android:orderInCategory="100"
+        android:title="@string/popular_action_time_asc"
+        app:showAsAction="never" />
+
+</menu>
