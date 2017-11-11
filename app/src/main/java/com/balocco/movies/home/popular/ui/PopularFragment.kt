@@ -15,6 +15,7 @@ import com.balocco.movies.common.ui.BaseFragment
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.popular.PopularContract
 import com.balocco.movies.home.popular.presentation.PopularPresenter
+import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
 import javax.inject.Inject
 
 class PopularFragment : BaseFragment(),
@@ -25,6 +26,7 @@ class PopularFragment : BaseFragment(),
     }
 
     @Inject lateinit var presenter: PopularPresenter
+    @Inject lateinit var dateToHumanReadableUseCase: DateToHumanReadableUseCase
 
     @BindView(R.id.pb_loader) lateinit var progressBar: ProgressBar
     @BindView(R.id.rv_moview) lateinit var recyclerView: RecyclerView
@@ -54,7 +56,8 @@ class PopularFragment : BaseFragment(),
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         context?.let {
-            adapter = PopularAdapter(it)
+            adapter = PopularAdapter(it,
+                    dateToHumanReadableUseCase)
             recyclerView.adapter = adapter
         }
 

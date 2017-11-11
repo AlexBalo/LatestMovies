@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="@dimen/one_and_half_grid_unit">
 
-    <TextView
-        android:id="@+id/tv_movie_title"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="@dimen/nine_grid_unit"
+        android:layout_height="@dimen/sixteen_grid_unit"
+        tools:ignore="ContentDescription"
+        android:background="@color/colorLightGrey" />
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="@dimen/quarter_grid_unit"
-        android:layout_marginRight="@dimen/quarter_grid_unit"
-        android:ellipsize="end"
-        android:textSize="@dimen/two_text_unit"
-        android:textColor="@android:color/black" />
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/two_grid_unit">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="@dimen/two_and_quarter_text_unit"
+            android:layout_marginBottom="@dimen/two_grid_unit" />
+
+        <TextView
+            android:id="@+id/tv_released"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/one_and_three_quarter_text_unit" />
+
+        <TextView
+            android:id="@+id/tv_original_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/one_and_three_quarter_text_unit" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/one_and_three_quarter_text_unit" />
+    </LinearLayout>
 
 </LinearLayout>
