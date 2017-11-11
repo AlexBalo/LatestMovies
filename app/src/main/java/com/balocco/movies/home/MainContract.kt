@@ -1,7 +1,7 @@
 package com.balocco.movies.home
 
 import android.os.Bundle
-import android.support.annotation.StringRes
+import com.balocco.movies.data.model.Movie
 import com.balocco.movies.mvp.BasePresenter
 import com.balocco.movies.mvp.BaseView
 
@@ -11,15 +11,15 @@ interface MainContract {
 
         fun start(savedInstanceState: Bundle?)
 
+        fun onMovieSelected(movie: Movie)
+
     }
 
     interface View : BaseView {
 
-        fun setTitle(@StringRes titleResource: Int)
-
-        fun setTitle(title: CharSequence)
-
         fun showPopular()
+
+        fun showMovieDetail(movie: Movie)
 
     }
 

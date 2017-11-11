@@ -1,6 +1,7 @@
 package com.balocco.movies.home.di
 
 import com.balocco.movies.common.di.ActivityScope
+import com.balocco.movies.home.detail.ui.DetailFragment
 import com.balocco.movies.home.popular.ui.PopularFragment
 import com.balocco.movies.home.ui.MainActivity
 import dagger.Module
@@ -17,5 +18,9 @@ abstract class MainActivityViewsBuildersModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     abstract fun contributePopularFragmentInjector(): PopularFragment
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
+    abstract fun contributeDetailFragmentInjector(): DetailFragment
 
 }

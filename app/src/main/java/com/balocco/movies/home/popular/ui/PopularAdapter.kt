@@ -8,6 +8,7 @@ import com.balocco.movies.R
 import com.balocco.movies.common.UrlProvider
 import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.data.model.Movie
+import com.balocco.movies.home.popular.OnMovieClickListener
 import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
 import java.util.*
 
@@ -15,6 +16,7 @@ class PopularAdapter(
         context: Context,
         private val imageLoader: ImageLoader,
         private val urlProvider: UrlProvider,
+        private val movieClickListener: OnMovieClickListener,
         private val dateToHumanReadableUseCase: DateToHumanReadableUseCase
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -42,6 +44,7 @@ class PopularAdapter(
         return PopularItemViewHolder(view,
                 imageLoader,
                 urlProvider,
+                movieClickListener,
                 dateToHumanReadableUseCase)
     }
 

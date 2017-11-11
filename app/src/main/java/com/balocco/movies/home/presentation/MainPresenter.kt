@@ -1,7 +1,7 @@
 package com.balocco.movies.home.presentation
 
 import android.os.Bundle
-import com.balocco.movies.R
+import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.MainContract
 import com.balocco.movies.mvp.ReactivePresenter
 import javax.inject.Inject
@@ -17,10 +17,13 @@ class MainPresenter @Inject constructor(
 
     override fun start(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            view.setTitle(R.string.title_popular_feed)
             view.showPopular()
             return
         }
+    }
+
+    override fun onMovieSelected(movie: Movie) {
+        view.showMovieDetail(movie)
     }
 
 }

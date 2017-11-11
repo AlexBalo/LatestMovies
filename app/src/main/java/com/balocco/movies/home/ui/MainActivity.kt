@@ -2,13 +2,13 @@ package com.balocco.movies.home.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.Menu
-import android.view.MenuItem
+import android.view.View
 import com.balocco.movies.R
 import com.balocco.movies.common.extension.replaceFragment
 import com.balocco.movies.common.ui.BaseActivity
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.MainContract
+import com.balocco.movies.home.detail.ui.DetailFragment
 import com.balocco.movies.home.popular.ui.PopularFragment
 import com.balocco.movies.home.presentation.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -16,7 +16,9 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(),
         PopularFragment.FragmentContainer,
-        MainContract.View {
+        DetailFragment.FragmentContainer,
+        MainContract.View,
+        View.OnClickListener {
 
     @Inject lateinit var presenter: MainPresenter
 
@@ -29,29 +31,51 @@ class MainActivity : BaseActivity(),
         presenter.start(savedInstanceState)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onDestroy() {
         presenter.destroy()
         super.onDestroy()
+    }
+
+    override fun onClick(view: View) {
+        val id = view.id
+        if (id == android.R.id.home) {
+            onBackPressed()
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (!fragmentManager.popBackStackImmediate()) {
+            super.onBackPressed()
+        }
     }
 
     override fun showPopular() {
         showFragment(PopularFragment.newInstance())
     }
 
+    override fun showMovieDetail(movie: Movie) {
+        showFragment(DetailFragment.newInstance(movie), true)
+    }
+
     override fun onMovieSelected(movie: Movie) {
-        // TODO: open detail
+        presenter.onMovieSelected(movie)
+    }
+
+    override fun enableNavigation(enabled: Boolean) {
+        supportActionBar?.let {
+            it.setHomeButtonEnabled(enabled)
+            it.setDisplayHomeAsUpEnabled(enabled)
+            it.setDisplayShowHomeEnabled(enabled)
+        }
+    }
+
+    override fun back() {
+        onBackPressed()
     }
 
     private fun showFragment(fragment: Fragment,

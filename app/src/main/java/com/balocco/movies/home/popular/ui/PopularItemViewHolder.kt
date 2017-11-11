@@ -11,6 +11,7 @@ import com.balocco.movies.R
 import com.balocco.movies.common.UrlProvider
 import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.data.model.Movie
+import com.balocco.movies.home.popular.OnMovieClickListener
 import com.balocco.movies.home.popular.PopularItemContract
 import com.balocco.movies.home.popular.presentation.PopularItemPresenter
 import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
@@ -19,6 +20,7 @@ class PopularItemViewHolder(
         itemView: View,
         private val imageLoader: ImageLoader,
         urlProvider: UrlProvider,
+        movieClickListener: OnMovieClickListener,
         dateToHumanReadableUseCase: DateToHumanReadableUseCase
 ) : RecyclerView.ViewHolder(itemView), PopularItemContract.View {
 
@@ -31,15 +33,20 @@ class PopularItemViewHolder(
     private val context: Context
     private val presenter: PopularItemPresenter
 
+    private lateinit var movie: Movie
+
     init {
         ButterKnife.bind(this, itemView)
 
         context = itemView.context
         presenter = PopularItemPresenter(urlProvider, dateToHumanReadableUseCase)
         presenter.setView(this)
+
+        itemView.setOnClickListener { movieClickListener.onMovieClicked(movie) }
     }
 
     fun onBindViewHolder(movie: Movie) {
+        this.movie = movie
         presenter.onMovieUpdated(movie)
     }
 

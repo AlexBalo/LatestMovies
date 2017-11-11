@@ -1,5 +1,6 @@
 package com.balocco.movies.home.popular.presentation
 
+import com.balocco.movies.R
 import com.balocco.movies.common.scheduler.SchedulerProvider
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.popular.PopularContract
@@ -20,9 +21,18 @@ class PopularPresenter @Inject constructor(
     }
 
     override fun start() {
+        view.setTitle(R.string.title_popular_feed)
+
         if (movies.isEmpty()) {
             fetchMovies()
+        } else {
+            view.hideLoading()
+            view.showMovies(movies)
         }
+    }
+
+    override fun onMovieSelected(movie: Movie) {
+        view.navigateToDetail(movie)
     }
 
     private fun fetchMovies() {

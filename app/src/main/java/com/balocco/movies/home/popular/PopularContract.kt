@@ -10,15 +10,21 @@ interface PopularContract {
 
         fun start()
 
+        fun onMovieSelected(movie: Movie)
+
     }
 
     interface View : BaseView {
+
+        fun setTitle(titleRes: Int)
 
         fun showLoading()
 
         fun hideLoading()
 
         fun showMovies(movies: List<Movie>)
+
+        fun navigateToDetail(movie: Movie)
 
     }
 
