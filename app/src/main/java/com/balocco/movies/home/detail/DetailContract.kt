@@ -18,6 +18,20 @@ interface DetailContract {
 
         fun navigateBack()
 
+        fun setBackdropSizes(width: Int, height: Int)
+
+        fun showBackdrop(backdropUrl: String)
+
+        fun showTitle(title: String)
+
+        fun showDescription(description: String)
+
+        fun showReleaseDate(releaseDate: String)
+
+        fun showOriginalLanguage(language: String)
+
+        fun showRating(rating: String)
+
     }
 
 }

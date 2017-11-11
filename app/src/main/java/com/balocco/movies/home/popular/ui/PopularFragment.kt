@@ -32,8 +32,8 @@ class PopularFragment : BaseFragment(),
     @Inject lateinit var imageLoader: ImageLoader
     @Inject lateinit var dateToHumanReadableUseCase: DateToHumanReadableUseCase
 
-    @BindView(R.id.pb_loader) lateinit var progressBar: ProgressBar
-    @BindView(R.id.rv_moview) lateinit var recyclerView: RecyclerView
+    @BindView(R.id.pb_loader) lateinit var pbLoading: ProgressBar
+    @BindView(R.id.rv_moview) lateinit var rvMoview: RecyclerView
 
     private lateinit var adapter: PopularAdapter
     private lateinit var container: FragmentContainer
@@ -65,16 +65,16 @@ class PopularFragment : BaseFragment(),
 
         this.container.enableNavigation(false)
 
-        recyclerView.isClickable = true
+        rvMoview.isClickable = true
         val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
+        rvMoview.layoutManager = layoutManager
         context?.let {
             adapter = PopularAdapter(it,
                     imageLoader,
                     urlProvider,
                     movieClickListener,
                     dateToHumanReadableUseCase)
-            recyclerView.adapter = adapter
+            rvMoview.adapter = adapter
         }
 
         presenter.setView(this)
@@ -108,11 +108,11 @@ class PopularFragment : BaseFragment(),
     }
 
     override fun showLoading() {
-        progressBar.visibility = View.VISIBLE
+        pbLoading.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        progressBar.visibility = View.GONE
+        pbLoading.visibility = View.GONE
     }
 
     override fun showMovies(movies: List<Movie>) {

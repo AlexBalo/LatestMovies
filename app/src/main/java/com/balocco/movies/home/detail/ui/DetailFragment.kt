@@ -6,7 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import butterknife.BindView
 import com.balocco.movies.R
+import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.common.ui.BaseFragment
 import com.balocco.movies.data.model.Movie
 import com.balocco.movies.home.detail.DetailContract
@@ -28,6 +32,15 @@ class DetailFragment : BaseFragment(),
     }
 
     @Inject lateinit var presenter: DetailPresenter
+    @Inject lateinit var imageLoader: ImageLoader
+
+    @BindView(R.id.iv_backdrop) lateinit var ivBackdrop: ImageView
+    @BindView(R.id.tv_title) lateinit var tvTitle: TextView
+    @BindView(R.id.tv_genres) lateinit var tvGenres: TextView
+    @BindView(R.id.tv_description) lateinit var tvDescription: TextView
+    @BindView(R.id.tv_released) lateinit var tvReleased: TextView
+    @BindView(R.id.tv_original_language) lateinit var tvLanguage: TextView
+    @BindView(R.id.tv_rating) lateinit var tvRating: TextView
 
     private lateinit var container: FragmentContainer
 
@@ -65,6 +78,36 @@ class DetailFragment : BaseFragment(),
 
     override fun navigateBack() {
         container.back()
+    }
+
+    override fun setBackdropSizes(width: Int, height: Int) {
+        val params = ivBackdrop.layoutParams
+        params.width = width
+        params.height = height
+    }
+
+    override fun showBackdrop(backdropUrl: String) {
+        imageLoader.loadImageInView(backdropUrl, ivBackdrop)
+    }
+
+    override fun showTitle(title: String) {
+        tvTitle.text = title
+    }
+
+    override fun showDescription(description: String) {
+        tvDescription.text = description
+    }
+
+    override fun showReleaseDate(releaseDate: String) {
+        tvReleased.text = context?.getString(R.string.popular_item_release, releaseDate)
+    }
+
+    override fun showOriginalLanguage(language: String) {
+        tvLanguage.text = context?.getString(R.string.popular_item_language, language)
+    }
+
+    override fun showRating(rating: String) {
+        tvRating.text = context?.getString(R.string.popular_item_rating, rating)
     }
 
     interface FragmentContainer {
