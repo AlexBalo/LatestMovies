@@ -43,6 +43,12 @@
                 android:textSize="@dimen/two_and_quarter_text_unit" />
 
             <TextView
+                android:id="@+id/tv_popularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/one_and_three_quarter_text_unit" />
+
+            <TextView
                 android:id="@+id/tv_released"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

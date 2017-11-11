@@ -23,6 +23,7 @@ class PopularItemPresenter @Inject constructor(
         val posterUrl = urlProvider.provideUrlForPoster(movie.posterPath)
 
         view.showTitle(movie.title)
+        view.showPopularity(movie.popularity.toString())
         view.showReleaseDate(readableDate)
         view.showOriginalLanguage(movie.originalLanguage)
         view.showRating(movie.voteAverage.toString())

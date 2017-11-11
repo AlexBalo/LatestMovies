@@ -4,6 +4,7 @@
 
     <string name="title_popular_feed">Popular feed</string>
 
+    <string name="popular_item_popularity">Popularity: %s</string>
     <string name="popular_item_release">Released on: %s</string>
     <string name="popular_item_language">Language: %s</string>
     <string name="popular_item_rating">Avg rating: %s</string>

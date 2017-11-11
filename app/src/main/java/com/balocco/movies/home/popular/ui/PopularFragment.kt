@@ -8,13 +8,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.Toast
 import butterknife.BindView
 import com.balocco.movies.R
 import com.balocco.movies.common.UrlProvider
 import com.balocco.movies.common.image.ImageLoader
 import com.balocco.movies.common.ui.BaseFragment
 import com.balocco.movies.data.model.Movie
+import com.balocco.movies.home.popular.OnEndlessListListener
 import com.balocco.movies.home.popular.OnMovieClickListener
+import com.balocco.movies.home.popular.OnRecyclerViewScrollListener
 import com.balocco.movies.home.popular.PopularContract
 import com.balocco.movies.home.popular.presentation.PopularPresenter
 import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
@@ -44,6 +47,13 @@ class PopularFragment : BaseFragment(),
         }
     }
 
+    private val endlessScrollListener = object : OnEndlessListListener {
+        override fun onLoadMore() {
+            //presenter.onTimeToLoadMore()
+            Toast.makeText(this@PopularFragment.context, "Load more", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         container = when (parentFragment) {
@@ -67,7 +77,11 @@ class PopularFragment : BaseFragment(),
 
         rvMoview.isClickable = true
         val layoutManager = LinearLayoutManager(context)
+        val scrollListener = OnRecyclerViewScrollListener(layoutManager)
+        scrollListener.setEndlessScrollListener(endlessScrollListener)
         rvMoview.layoutManager = layoutManager
+        rvMoview.addOnScrollListener(scrollListener)
+
         context?.let {
             adapter = PopularAdapter(it,
                     imageLoader,

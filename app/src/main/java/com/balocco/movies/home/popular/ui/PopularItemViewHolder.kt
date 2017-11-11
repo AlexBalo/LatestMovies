@@ -26,6 +26,7 @@ class PopularItemViewHolder(
 
     @BindView(R.id.iv_image) lateinit var ivPoster: ImageView
     @BindView(R.id.tv_title) lateinit var tvTitle: TextView
+    @BindView(R.id.tv_popularity) lateinit var tvPopularity: TextView
     @BindView(R.id.tv_released) lateinit var tvReleased: TextView
     @BindView(R.id.tv_original_language) lateinit var tvLanguage: TextView
     @BindView(R.id.tv_rating) lateinit var tvRating: TextView
@@ -56,6 +57,10 @@ class PopularItemViewHolder(
 
     override fun showTitle(title: String) {
         tvTitle.text = title
+    }
+
+    override fun showPopularity(popularity: String) {
+        tvPopularity.text = context.getString(R.string.popular_item_popularity, popularity)
     }
 
     override fun showReleaseDate(releaseDate: String) {

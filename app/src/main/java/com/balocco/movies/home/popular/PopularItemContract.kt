@@ -16,6 +16,8 @@ interface PopularItemContract {
 
         fun showTitle(title: String)
 
+        fun showPopularity(popularity: String)
+
         fun showReleaseDate(releaseDate: String)
 
         fun showOriginalLanguage(language: String)
