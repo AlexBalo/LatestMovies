@@ -1,17 +1,21 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def config = project.ext
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.compileSdkVersion
+    buildToolsVersion config.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.balocco.movies"
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        applicationId config.packageName
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName config.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,11 +33,49 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:design:27.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${config.kotlinVersion}"
+
+    // Android
+    implementation "com.android.support:appcompat-v7:${config.supportLibraryVersion}"
+    implementation "com.android.support:design:${config.supportLibraryVersion}"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${config.daggerVersion}"
+    implementation "com.google.dagger:dagger-android:${config.daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${config.daggerVersion}"
+    kapt "com.google.dagger:dagger-compiler:${config.daggerVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${config.daggerVersion}"
+    compileOnly "org.glassfish:javax.annotation:${glassfishAnnotationVersion}"
+
+    // Network
+    implementation "com.google.code.gson:gson:${config.gsonVersion}"
+    implementation "com.squareup.okhttp3:okhttp:${config.okhttpVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${config.okhttpVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${config.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${config.retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${config.rxJava2Adapter}"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:${config.rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${config.rxAndroidVersion}"
+    implementation "nl.littlerobots.rxlint:rxlint:${config.rxLintVersion}"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:${config.butterKnifeVersion}"
+    kapt "com.jakewharton:butterknife-compiler:${config.butterKnifeVersion}"
+
+    testImplementation "junit:junit:${config.junitVersion}"
+    testImplementation "org.assertj:assertj-core:${config.assertjVersion}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${config.kotlinVersion}"
+    testImplementation "org.hamcrest:hamcrest-core:${config.hamcrestVersion}"
+    testImplementation "org.hamcrest:hamcrest-library:${config.hamcrestVersion}"
+    testImplementation "org.hamcrest:hamcrest-integration:${config.hamcrestVersion}"
+    testImplementation "org.robolectric:robolectric:${config.robolectricVersion}"
+    testImplementation "org.mockito:mockito-core:${config.mockitoVersion}"
+    testImplementation "org.mockito:mockito-inline:${config.mockitoVersion}"
+    testImplementation dependencies.create("com.nhaarman:mockito-kotlin:${config.mockitoKotlinVersion}") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }

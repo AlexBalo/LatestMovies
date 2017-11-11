@@ -20,6 +20,48 @@ allprojects {
         google()
         jcenter()
     }
+
+    project.ext {
+        packageName = "com.balocco.movies"
+        versionCode = 1
+        versionName = "1.0.0"
+
+        // SDK properties
+        compileSdkVersion = 27
+        buildToolsVersion = "27.0.1"
+        minSdkVersion = 16
+        targetSdkVersion = 27
+
+        // Google
+        supportLibraryVersion = "27.0.0"
+        gsonVersion = "2.8.1"
+
+        // Kotlin
+        kotlinVersion = kotlin_version
+
+        // Dagger
+        daggerVersion = "2.12"
+        glassfishAnnotationVersion = "10.0-b28"
+
+        // Network
+        butterKnifeVersion = "8.8.1"
+        retrofitVersion = "2.3.0"
+        okhttpVersion = "3.8.1"
+        rxJava2Adapter = "2.3.0"
+
+        // RxJava
+        rxJavaVersion = "2.1.2"
+        rxAndroidVersion = "2.0.1"
+        rxLintVersion = "1.5"
+
+        // Test
+        junitVersion = "4.12"
+        assertjVersion = "3.8.0"
+        mockitoVersion = "2.8.47"
+        mockitoKotlinVersion = "1.5.0"
+        hamcrestVersion = "1.3"
+        robolectricVersion = "3.4.2"
+    }
 }
 
 task clean(type: Delete) {
