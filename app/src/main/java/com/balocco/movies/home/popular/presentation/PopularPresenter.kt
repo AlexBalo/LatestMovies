@@ -19,8 +19,6 @@ import javax.inject.Inject
 private const val INVALID = -1
 private const val KEY_CURRENT_PAGE = "KEY_CURRENT_PAGE"
 private const val KEY_TOTAL_PAGES = "KEY_TOTAL_PAGES"
-private const val KEY_MOVIES = "KEY_MOVIES"
-private const val KEY_FILTER = "KEY_FILTER"
 
 class PopularPresenter @Inject constructor(
         private val schedulerProvider: SchedulerProvider,
@@ -28,7 +26,12 @@ class PopularPresenter @Inject constructor(
         private val sortPopularMoviesUseCase: SortPopularMoviesUseCase
 ) : ReactivePresenter(), PopularContract.Presenter {
 
-    private enum class Filter {
+    companion object {
+        const val KEY_MOVIES = "KEY_MOVIES"
+        const val KEY_FILTER = "KEY_FILTER"
+    }
+
+    enum class Filter {
         POPULARITY,
         TIME_ASC,
         TIME_DESC
