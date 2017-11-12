@@ -11,8 +11,6 @@ import com.balocco.movies.home.usecase.DateToHumanReadableUseCase
 import com.balocco.movies.mvp.ReactivePresenter
 import javax.inject.Inject
 
-private const val EMPTY_GENRES = "-"
-
 class DetailPresenter @Inject constructor(
         private val urlProvider: UrlProvider,
         private val genreStore: GenreStore,
@@ -21,6 +19,10 @@ class DetailPresenter @Inject constructor(
         private val dateToHumanReadableUseCase: DateToHumanReadableUseCase,
         private val fetchGenresUseCase: FetchGenresUseCase
 ) : ReactivePresenter(), DetailContract.Presenter {
+
+    companion object {
+        const val EMPTY_GENRES = "-"
+    }
 
     private lateinit var view: DetailContract.View
 
