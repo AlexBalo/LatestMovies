@@ -67,8 +67,12 @@ class DetailFragment : BaseFragment(),
         return view
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         presenter.destroy()
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
         container = null
         super.onDestroy()
     }

@@ -133,11 +133,11 @@ class PopularFragment : BaseFragment(),
 
     override fun onDestroyView() {
         presenter.stop()
+        presenter.destroy()
         super.onDestroyView()
     }
 
     override fun onDestroy() {
-        presenter.destroy()
         container = null
         super.onDestroy()
     }
