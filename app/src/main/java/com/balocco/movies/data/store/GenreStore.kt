@@ -4,7 +4,7 @@ import com.balocco.movies.data.model.Genre
 
 class GenreStore {
 
-    private val genres: MutableList<Genre> = arrayListOf()
+    private val genres: MutableList<Genre> = ArrayList()
 
     fun hasData(): Boolean = genres.isNotEmpty()
 

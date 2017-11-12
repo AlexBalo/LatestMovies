@@ -22,12 +22,14 @@ class PopularItemPresenter @Inject constructor(
         val readableDate = dateToHumanReadableUseCase.execute(movie.releaseDate)
         val posterUrl = urlProvider.provideUrlForPoster(movie.posterPath)
 
-        view.showTitle(movie.title)
-        view.showPopularity(movie.popularity.toString())
-        view.showReleaseDate(readableDate)
-        view.showOriginalLanguage(movie.originalLanguage)
-        view.showRating(movie.voteAverage.toString())
-        view.showPoster(posterUrl)
+        with(view) {
+            showTitle(movie.title)
+            showPopularity(movie.popularity.toString())
+            showReleaseDate(readableDate)
+            showOriginalLanguage(movie.originalLanguage)
+            showRating(movie.voteAverage.toString())
+            showPoster(posterUrl)
+        }
     }
 
 }

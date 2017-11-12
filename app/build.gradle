@@ -76,7 +76,6 @@ dependencies {
     testImplementation "org.hamcrest:hamcrest-core:${config.hamcrestVersion}"
     testImplementation "org.hamcrest:hamcrest-library:${config.hamcrestVersion}"
     testImplementation "org.hamcrest:hamcrest-integration:${config.hamcrestVersion}"
-    testImplementation "org.robolectric:robolectric:${config.robolectricVersion}"
     testImplementation "org.mockito:mockito-core:${config.mockitoVersion}"
     testImplementation "org.mockito:mockito-inline:${config.mockitoVersion}"
     testImplementation dependencies.create("com.nhaarman:mockito-kotlin:${config.mockitoKotlinVersion}") {
