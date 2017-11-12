@@ -186,7 +186,7 @@ class PopularFragment : BaseFragment(),
         snackBar?.dismiss()
     }
 
-    override fun enabledLoadingCallbacks() {
+    override fun enableLoadingCallbacks() {
         scrollListener.setEndlessScrollListener(endlessScrollListener)
     }
 

@@ -60,13 +60,16 @@ class PopularPresenter @Inject constructor(
 
         if (movies.isEmpty()) {
             filter = Filter.POPULARITY
+            view.enableLoadingCallbacks()
             fetchMovies()
             return
         }
 
         view.hideLoading()
         view.showMovies(movies)
-        if (filter == Filter.TIME_DESC) {
+        if (filter == Filter.POPULARITY) {
+            view.enableLoadingCallbacks()
+        } else if (filter == Filter.TIME_DESC) {
             view.showFilterMessage(R.string.popular_filter_message_desc)
         } else if (filter == Filter.TIME_ASC) {
             view.showFilterMessage(R.string.popular_filter_message_asc)
@@ -82,6 +85,7 @@ class PopularPresenter @Inject constructor(
 
     override fun stop() {
         view.hideFilterMessage()
+        view.disableLoadingCallbacks()
     }
 
     override fun onMovieSelected(movie: Movie) {
@@ -110,7 +114,7 @@ class PopularPresenter @Inject constructor(
     override fun onFilterCleared() {
         filter = Filter.POPULARITY
         view.hideLoading()
-        view.enabledLoadingCallbacks()
+        view.enableLoadingCallbacks()
         sortList(MoviePopularityDescendingComparator(), INVALID)
     }
 

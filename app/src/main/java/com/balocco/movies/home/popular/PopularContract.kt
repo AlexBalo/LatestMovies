@@ -46,7 +46,7 @@ interface PopularContract {
 
         fun hideFilterMessage()
 
-        fun enabledLoadingCallbacks()
+        fun enableLoadingCallbacks()
 
         fun disableLoadingCallbacks()
 
